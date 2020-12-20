@@ -10,14 +10,10 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-console.log(`OUTPUT_DIR = ${OUTPUT_DIR}`)
-console.log(`outputPath = ${outputPath}`)
-
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 const promptNextAction = () => {
-    console.log("\n")
     inquirer.prompt([
         {
             type: "list",
@@ -27,24 +23,27 @@ const promptNextAction = () => {
         }
     ])
         .then(responses => {
-            console.log("\n")
             switch (responses.employeeType) {
                 case "Add Engineer":
                     constructEngineer()
+                    break
                 case "Add Intern":
-                // constructIntern()
+                    constructIntern()
+                    break
                 case "Build Team Website":
-                // buildWebsite()
+                    // buildWebsite()
+                    break
                 default:
-                    return
+                    break
             }
+
         })
 }
 
 // Manager prompts
 const constructManager = () => {
     const promptTitle = `Manager Information`
-    console.log(promptTitle)
+    console.log("\n", promptTitle)
     console.log(`-`.repeat(promptTitle.length))
 
     inquirer.prompt([
@@ -80,6 +79,9 @@ const constructManager = () => {
                 responses.email,
                 responses.officeNumber
             )
+
+            console.log(`\n${manager.name} has been added to the Team!\n`)
+
             // THEN callback prompt to add intern/engineer/build website
             promptNextAction()
         })
@@ -88,7 +90,7 @@ const constructManager = () => {
 // Engineer prompts
 const constructEngineer = () => {
     const promptTitle = `Engineer Information`
-    console.log(promptTitle)
+    console.log("\n", promptTitle)
     console.log(`-`.repeat(promptTitle.length))
 
     inquirer.prompt([
@@ -118,25 +120,66 @@ const constructEngineer = () => {
         }
     ])
         .then(responses => {
-            const manager = new Manager(
+            const engineer = new Engineer(
                 responses.name,
                 responses.id,
                 responses.email,
                 responses.githubUsername
             )
+
+            console.log(`\n${engineer.name} has been added to the Team!\n`)
+
             // THEN callback prompt to add intern/engineer/build website
             promptNextAction()
         })
 }
 
 // Intern prompts
+const constructIntern = () => {
+    const promptTitle = `Intern Information`
+    console.log("\n", promptTitle)
+    console.log(`-`.repeat(promptTitle.length))
 
-// prompt for name
-// prompt for id
-// prompt for email
-// prompt for school
-// THEN callback prompt to add intern/engineer/build website
+    inquirer.prompt([
+        // prompt for name
+        {
+            type: "input",
+            message: "Name: ",
+            name: "name"
+        },
+        // prompt for id
+        {
+            type: "input",
+            message: "ID: ",
+            name: "id"
+        },
+        // prompt for email
+        {
+            type: "input",
+            message: "Email: ",
+            name: "email"
+        },
+        // prompt for school
+        {
+            type: "input",
+            message: "Intern's School: ",
+            name: "school"
+        }
+    ])
+        .then(responses => {
+            const intern = new Intern(
+                responses.name,
+                responses.id,
+                responses.email,
+                responses.school
+            )
 
+            console.log(`\n${intern.name} has been added to the Team!\n`)
+
+            // THEN callback prompt to add intern/engineer/build website
+            promptNextAction()
+        })
+}
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
