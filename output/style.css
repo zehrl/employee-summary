@@ -1,0 +1,48 @@
+/* General */
+h1 {
+    font-size: 3rem;
+}
+
+/* Jumbotron */
+.jumbotron {
+    background: cornflowerblue;
+}
+
+/* Employee Cards */
+.card {
+    min-width: 260px;
+}
+
+.employee-card {
+    margin: 10px;
+    box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+}
+
+.manager-card {
+    background-color: lightsalmon;
+}
+
+.engineer-card {
+    background-color: lightskyblue;
+}
+
+.intern-card {
+    background-color: lightgreen;
+}
+
+.card-body {
+    background-color: rgb(243, 242, 242);
+}
+
+
+@media screen and (min-width: 425px) {
+    h1 {
+        font-size: 5rem;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    h1 {
+        font-size: 6rem;
+    }
+  }
