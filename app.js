@@ -16,10 +16,34 @@ console.log(`outputPath = ${outputPath}`)
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
+const promptNextAction = () => {
+    console.log("\n")
+    inquirer.prompt([
+        {
+            type: "list",
+            message: "Select an action: ",
+            choices: ["Add Engineer", "Add Intern", "Build Team Website"],
+            name: "employeeType"
+        }
+    ])
+        .then(responses => {
+            console.log("\n")
+            switch (responses.employeeType) {
+                case "Add Engineer":
+                    constructEngineer()
+                case "Add Intern":
+                // constructIntern()
+                case "Build Team Website":
+                // buildWebsite()
+                default:
+                    return
+            }
+        })
+}
 
 // Manager prompts
-const getBasicInfo = (title) => {
-    const promptTitle = `${title} Information`
+const constructManager = () => {
+    const promptTitle = `Manager Information`
     console.log(promptTitle)
     console.log(`-`.repeat(promptTitle.length))
 
@@ -42,53 +66,76 @@ const getBasicInfo = (title) => {
             message: "Email: ",
             name: "email"
         },
-    ])
-        .then(responses => {
-            console.log(responses)
-            switch (title) {
-                case "Manager":
-                    promptManager()
-                case "Engineer":
-                    // promptEngineer()
-                case "Intern":
-                    // promptIntern()
-                default:
-                    return
-            }
-            
-        })
-}
-
-const promptManager = () => {
-    inquirer.prompt([
+        // prompt for office number
         {
             type: "input",
             message: "Office Number: ",
             name: "officeNumber"
         }
     ])
+        .then(responses => {
+            const manager = new Manager(
+                responses.name,
+                responses.id,
+                responses.email,
+                responses.officeNumber
+            )
+            // THEN callback prompt to add intern/engineer/build website
+            promptNextAction()
+        })
 }
 
+// Engineer prompts
+const constructEngineer = () => {
+    const promptTitle = `Engineer Information`
+    console.log(promptTitle)
+    console.log(`-`.repeat(promptTitle.length))
 
-// Prompt user if they'd like to add an intern, add an engineer, or exit
-// THEN callback functions for Intern prompts, Engineer prompts, or exit
-
+    inquirer.prompt([
+        // prompt for name
+        {
+            type: "input",
+            message: "Name: ",
+            name: "name"
+        },
+        // prompt for id
+        {
+            type: "input",
+            message: "ID: ",
+            name: "id"
+        },
+        // prompt for email
+        {
+            type: "input",
+            message: "Email: ",
+            name: "email"
+        },
+        // prompt for github username
+        {
+            type: "input",
+            message: "Github Username: ",
+            name: "githubUsername"
+        }
+    ])
+        .then(responses => {
+            const manager = new Manager(
+                responses.name,
+                responses.id,
+                responses.email,
+                responses.githubUsername
+            )
+            // THEN callback prompt to add intern/engineer/build website
+            promptNextAction()
+        })
+}
 
 // Intern prompts
+
 // prompt for name
 // prompt for id
 // prompt for email
 // prompt for school
-// THEN callback prompt to add intern/engineer/exit
-
-
-// Engineer prompts
-// prompt for name
-// prompt for id
-// prompt for email
-// prompt for github username
-// THEN callback prompt to add intern/engineer/exit
-
+// THEN callback prompt to add intern/engineer/build website
 
 
 // After the user has input all employees desired, call the `render` function (required
@@ -113,4 +160,4 @@ const promptManager = () => {
 
 // Function Calls
 console.clear()
-getBasicInfo("Manager")
+constructManager()
