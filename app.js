@@ -30,7 +30,6 @@ const promptNextAction = () => {
                     constructIntern()
                     break
                 case "Build Team Website":
-                    console.log(team)
                     buildWebsite()
                     break
                 default:
