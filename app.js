@@ -10,6 +10,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const team = []
+
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -31,6 +33,7 @@ const promptNextAction = () => {
                     constructIntern()
                     break
                 case "Build Team Website":
+                    console.log(team)
                     // buildWebsite()
                     break
                 default:
@@ -80,6 +83,9 @@ const constructManager = () => {
                 responses.officeNumber
             )
 
+            // add team member to team array
+            team.push(manager)
+
             console.log(`\n${manager.name} has been added to the Team!\n`)
 
             // THEN callback prompt to add intern/engineer/build website
@@ -127,6 +133,9 @@ const constructEngineer = () => {
                 responses.githubUsername
             )
 
+            // add team member to team array
+            team.push(engineer)
+
             console.log(`\n${engineer.name} has been added to the Team!\n`)
 
             // THEN callback prompt to add intern/engineer/build website
@@ -173,6 +182,9 @@ const constructIntern = () => {
                 responses.email,
                 responses.school
             )
+
+            // add team member to team array
+            team.push(intern)
 
             console.log(`\n${intern.name} has been added to the Team!\n`)
 
